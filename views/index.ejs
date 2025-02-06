@@ -1,0 +1,23 @@
+<%- include('layout') %>
+
+<h1>Welcome to EventFlow</h1>
+
+<!-- Flash Messages -->
+<% if (success_msg) { %>
+    <div class="alert alert-success"><%= success_msg %></div>
+<% } %>
+
+<% if (error_msg) { %>
+    <div class="alert alert-danger"><%= error_msg %></div>
+<% } %>
+
+<!-- Example content for your homepage -->
+<p>EventFlow helps you organize and manage events seamlessly. Join us and create unforgettable events!</p>
+
+<!-- Link to Login or SignUp -->
+<p>
+    <a href="/auth/signup">Sign Up</a> | 
+    <a href="/auth/login">Login</a>
+</p>
+
+<%- include('footer') %>
