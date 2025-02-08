@@ -1,0 +1,24 @@
+<%- include('layout') %>
+
+<div class="container mt-5">
+  <h2>Event Details</h2>
+  <h3><%= event.title %></h3>
+  <p><strong>Description:</strong> <%= event.description %></p>
+  <p><strong>Location:</strong> <%= event.location %></p>
+  <p><strong>Date:</strong> <%= event.date.toDateString() %></p>
+  
+  <h4 class="mt-4">Registered Users</h4>
+  <% if (event.attendees.length === 0) { %>
+    <p>No users registered for this event.</p>
+  <% } else { %>
+    <ul class="list-group">
+      <% event.attendees.forEach(function(user) { %>
+        <li class="list-group-item">
+          <strong><%= user.name %></strong> - <%= user.email %>
+        </li>
+      <% }); %>
+    </ul>
+  <% } %>
+  
+  <a href="/events/all" class="btn btn-secondary mt-3">Back to All Events</a>
+</div>

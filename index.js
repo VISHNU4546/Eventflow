@@ -34,6 +34,11 @@ app.use((req, res, next) => {
     res.locals.error_msg = req.flash('error_msg') || null;     // Default to null if undefined
     next();
 });
+const dns = require('dns');
+dns.lookup('cluster0.ltwzo.mongodb.net', (err, address, family) => {
+  if (err) console.error(err);
+  else console.log('Address:', address, 'Family:', family);
+});
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URL, {
@@ -45,10 +50,12 @@ mongoose.connect(process.env.MONGO_URL, {
 
 // Import routes
 const authRoutes = require('./routes/auth');
-
+const adminRoutes = require('./routes/admin');
+const eventRoutes = require("./routes/events");
 // Use routes
 app.use('/auth', authRoutes); // Authentication routes
-
+app.use('/admin', adminRoutes);
+app.use("/events",eventRoutes);
 // Basic route for home
 app.get('/', (req, res) => {
     res.render('index', {
@@ -56,10 +63,26 @@ app.get('/', (req, res) => {
     });
 });
 
+app.get('/dashboard', (req, res) => {
+    // Assume req.session.user contains authenticated user information
+    console.log(req.session);
+    if (!req.session.user) {
+        req.flash('error_msg', 'Please log in to view the dashboard');
+        return res.redirect('/auth/login');
+    }
+    res.render('dashboard', {
+        title: 'Dashboard - EventFlow',
+        user: req.session.user // Pass user data to the view
+    });
+});
+
 // Error handling for undefined routes
 app.use((req, res, next) => {
     res.status(404).render('404', { title: 'Page Not Found' });
 });
+
+
+
 
 // Define the port and start the server
 const PORT = process.env.PORT || 3000;

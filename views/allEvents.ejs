@@ -1,0 +1,52 @@
+<%- include('layout') %>
+
+<div class="container mt-5">
+  <h2>All Events</h2>
+
+  <% if (success_msg) { %>
+    <div class="alert alert-success"><%= success_msg %></div>
+  <% } %>
+  <% if (error_msg) { %>
+    <div class="alert alert-danger"><%= error_msg %></div>
+  <% } %>
+
+  <% if (events.length === 0) { %>
+    <p>No events available.</p>
+  <% } else { %>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Location</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% events.forEach(function(event) { %>
+          <tr>
+            <td><%= event.title %></td>
+            <td><%= event.description %></td>
+            <td><%= event.location %></td>
+            <td><%= event.date.toDateString() %></td>
+            <td>
+              <% if(user && user.email === 'vishnukumawat4546@gmail.com'){ %>
+                <!-- Admin sees the delete button -->
+                <form action="/events/delete/<%= event._id %>" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this event?');">
+                  <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+                <a href="/events/details/<%= event._id %>" class="btn btn-info btn-sm">View Details</a>
+              <% } else if (user) { %>
+                <!-- Regular user sees the register button -->
+                <form action="/events/register/<%= event._id %>" method="POST" style="display:inline;">
+                  <button type="submit" class="btn btn-success btn-sm">Register</button>
+                </form>
+              <% } %>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } %>
+</div>

@@ -1,0 +1,17 @@
+<%- include('layout') %>
+
+<div class="container mt-5">
+    <h2>Verify OTP</h2>
+    
+    <% if (error_msg) { %>
+        <div class="alert alert-danger"><%= error_msg %></div>
+    <% } %>
+    
+    <form action="/auth/verify-otp" method="POST">
+        <div class="form-group">
+            <label for="otpInput">Enter OTP</label>
+            <input type="text" name="otpInput" id="otpInput" class="form-control" placeholder="Enter the 6-digit code" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Verify OTP</button>
+    </form>
+</div>

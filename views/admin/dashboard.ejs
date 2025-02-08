@@ -1,15 +1,16 @@
-<%- include('layout') %>
+<!-- views/admin/dashboard.ejs -->
+<%- include('../layout') %>
 
 <div class="container mt-5">
-    <h2>Dashboard</h2>
+    <h2>Admin Dashboard</h2>
     <p>Welcome, <strong><%= user.name %></strong>!</p>
     <p>Your email: <%= user.email %></p>
     
-    <!-- Additional dashboard content can go here -->
+    <!-- Add links or functionality for event management or other admin tasks -->
     <div class="mt-4">
-        <a href="/events/my" class="btn btn-warning">Manage My Registered Events</a>
         <a href="/events/all" class="btn btn-info">View All Events</a>
+        <a href="/events/create" class="btn btn-primary">Create New Event</a>
         <a href="/auth/logout" class="btn btn-danger">Logout</a>
     </div>
 </div>
-<%- include('footer') %>
+<%- include('../footer') %>
